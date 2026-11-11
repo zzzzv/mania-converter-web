@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { FileArchive, Search, Github, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { FileArchive, Search, Github, ExternalLink, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { CONVERTERS, DEFAULT_CONVERTER_ID, defaultValuesFor, getConverter } from './lib/convert/registry';
 import type { SettingValues } from './lib/convert/types';
 import type { SayobotSearchItem, VideoVariant } from './lib/sayobot';
@@ -150,20 +150,45 @@ export default function App() {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2 text-[11px] text-ink-600">
-            <span className="relative flex h-1.5 w-1.5">
-              {busy ? (
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-500 opacity-70" />
-              ) : null}
-              <span
-                className={`relative inline-flex h-1.5 w-1.5 rounded-full ${busy ? 'bg-accent-500' : 'bg-[#0E9F6E]'}`}
-              />
-            </span>
-            <span className="tabular-nums">
-              {busy
-                ? `${activeCount} 个进行中${queuedCount > 0 ? ` · ${queuedCount} 个排队` : ''}`
-                : '空闲'}
-            </span>
+          <div className="flex shrink-0 items-center gap-3">
+            <div className="flex items-center gap-2 text-[11px] text-ink-600">
+              <span className="relative flex h-1.5 w-1.5">
+                {busy ? (
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-500 opacity-70" />
+                ) : null}
+                <span
+                  className={`relative inline-flex h-1.5 w-1.5 rounded-full ${busy ? 'bg-accent-500' : 'bg-[#0E9F6E]'}`}
+                />
+              </span>
+              <span className="tabular-nums">
+                {busy
+                  ? `${activeCount} 个进行中${queuedCount > 0 ? ` · ${queuedCount} 个排队` : ''}`
+                  : '空闲'}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-1">
+              <a
+                href="https://github.com/zzzzv/mania-converter-web"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="GitHub 仓库"
+                title="GitHub 仓库"
+                className="btn-quiet h-7 w-7 rounded-lg p-0 text-ink-400 hover:text-ink-900"
+              >
+                <Github size={15} strokeWidth={1.8} />
+              </a>
+              <a
+                href="https://zzzzv.github.io/mania-converter-web/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="在线版地址"
+                title="在线版 zzzzv.github.io/mania-converter-web"
+                className="btn-quiet h-7 w-7 rounded-lg p-0 text-ink-400 hover:text-ink-900"
+              >
+                <ExternalLink size={15} strokeWidth={1.8} />
+              </a>
+            </div>
           </div>
         </div>
       </header>
@@ -250,7 +275,7 @@ export default function App() {
             转换在浏览器内完成，不依赖服务器；算法移植自 Ez2Lazer 的 Extend Keys 社区 mod，结果带随机性。
           </p>
           <p className="flex items-center gap-1">
-            <Github size={12} strokeWidth={1.8} />
+            <FileArchive size={12} strokeWidth={1.8} />
             单文件发布版本，可直接离线打开使用
           </p>
         </footer>
