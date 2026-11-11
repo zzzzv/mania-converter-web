@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-canvas font-sans text-[13px] text-ink-900 antialiased;
+    background-image: radial-gradient(900px 380px at 12% -10%, #eef0ff 0%, rgba(247, 248, 250, 0) 70%),
+      radial-gradient(700px 320px at 92% 0%, #f0f4ff 0%, rgba(247, 248, 250, 0) 65%);
+    background-repeat: no-repeat;
+  }
+
+  ::selection {
+    background: #e0e3ff;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-line bg-white shadow-card;
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-line bg-white px-3 py-2 text-[13px] text-ink-900 outline-none transition
+      placeholder:text-ink-400 focus:border-accent-300 focus:ring-2 focus:ring-accent-50;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-[13px] font-medium transition
+      duration-150 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply btn bg-accent-500 text-white hover:bg-accent-600 active:translate-y-px disabled:hover:bg-accent-500;
+  }
+
+  .btn-ghost {
+    @apply btn border border-line bg-white text-ink-700 hover:border-ink-300 hover:text-ink-900 active:translate-y-px;
+  }
+
+  .btn-quiet {
+    @apply btn text-ink-600 hover:bg-canvas hover:text-ink-900;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-line bg-white px-2.5 py-1 text-[11px]
+      font-medium text-ink-600 transition;
+  }
+
+  .chip-active {
+    @apply border-accent-300 bg-accent-50 text-accent-700;
+  }
+
+  .label-group {
+    @apply text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-400;
+  }
+}
+
+@layer utilities {
+  .scroll-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db transparent;
+  }
+
+  .scroll-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scroll-thin::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: #dfe2e9;
+  }
+}
