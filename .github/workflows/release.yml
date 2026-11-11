@@ -1,0 +1,56 @@
+name: Release
+
+# 每次提交都发一次版，不需要打 tag；提交信息里带 [skip ci] 时 GitHub 会自动跳过本次运行
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: true
+
+jobs:
+  release:
+    name: Build and publish release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Build single-file HTML
+        run: npm run build
+
+      - name: Collect artifact
+        run: |
+          mkdir -p release
+          cp dist/mania-converter.html release/mania-converter.html
+
+      # 固定用 latest 这个滚动 tag，下载地址保持不变：
+      # https://github.com/<owner>/<repo>/releases/latest/download/mania-converter.html
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="$(date -u '+%Y-%m-%d %H:%M UTC')"
+          NOTES="$(git log -1 --pretty=%B)"
+          [ -n "${NOTES}" ] || NOTES="manual build"
+
+          gh release delete latest --cleanup-tag --yes >/dev/null 2>&1 || true
+          gh release create latest release/mania-converter.html \
+            --title "${TITLE}" \
+            --notes "${NOTES}" \
+            --latest
